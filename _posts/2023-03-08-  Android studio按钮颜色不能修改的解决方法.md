@@ -12,7 +12,14 @@ author: HYcracker
 就是Button 按钮的背景颜色无法修改的问题。通俗点说就是怎么设置背景颜色它这斯就是始终显示紫色。自己本来在按钮属性中设置啦bankdround 的值可颜色依然没有变化，是不是很难受，那恭喜你，你遇到啦我 我将让你不在难受。
 当然我能提出这样一个问题说明我是遇到啦， 好像有点废话啦。
 那下面就介绍一下怎么解决。不废话啦直接上教程。看下图
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2d5c7537a6424d3ca7f1022974152737.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5a-S5L6d56eR5oqA,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+
+
+
+
+
 打开 values 下面的themes.xml  文件  在`    <style name="Theme.MyAppCh5" parent="Theme.MaterialComponents.DayNight.DarkActionBar">`里面parent的值最后面加上     **.Bridge**
 即改成
 `    <style name="Theme.MyAppCh5" parent="Theme.MaterialComponents.DayNight.DarkActionBar.Bridge">`
