@@ -15,6 +15,12 @@ author: HYcracker
 ## 1.2 设计要求
 设计简单的APP。APP中至少包括5个以上的Activity页面。要求有数据库连接，并进行简单的交互。至少包括以下控件和元素：文本框、按钮、下拉列表、单选按钮、复选按钮、文本、ListView或GridView等。
 
+
+
+
+
+
+
 # 2．APP功能
 该APP包含个10个Activity，每个Activity的功能（附运行图）及写Activity的操作说明。
 ## 2.1、登录页面
