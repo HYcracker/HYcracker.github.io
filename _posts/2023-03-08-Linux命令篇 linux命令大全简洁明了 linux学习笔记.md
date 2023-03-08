@@ -13,6 +13,13 @@ author: HYcracker
 # Linux 命令大全
 @[toc]
 
+
+
+
+
+
+
+
 # 一、  常用的基础命令
 
 ## 查看目录：
@@ -24,11 +31,7 @@ author: HYcracker
 ## 	切换目录：
 
 	03.   cd [目录名] (change directory) 切换文件夹
-  
-  
-  
-  
-  
+ 
 
 ## 	创建和删除：
 	04.   touch [文件名] (touch) 如果文件不存在则新建文件
