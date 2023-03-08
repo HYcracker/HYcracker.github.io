@@ -1,0 +1,199 @@
+---
+layout: post
+title:  "Android 开发 页面布局实现固定顶部和底部导航栏，中间可滑动"
+categories: android
+tags:  android java
+author: HYcracker
+---
+
+# Android 开发 页面布局实现固定顶部和底部导航栏，中间可滑动
+大家好  I am HYJones 
+相信大家在学习Android开发的时候是不是想过也想做出高大尚的页面 那你算是来对地方啦 
+下面将传授大家的秘籍就是 Android 页面布局实现固定顶部和底部导航栏
+大家有没有发现我们平常使用的软件都是固定顶部和底部的菜单栏的 ，而中间的部分是可以上下滑动的。这样软件的界面就会比较使用 而且有b格 。
+如果你也想实现这样的效果，看啦这篇文章 你也可以轻松实现，全是基础知识，只用线性布局即可实现 。 
+先看一下效果,体验一下快感。
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/4546962170fa436886a15762af35e3b2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASFlKb25lcw==,size_20,color_FFFFFF,t_70,g_se,x_16)
+页面颜色多是为啦看的更明白
+直接上源码
+activity_main.xml
+
+
+```xml
+<!--        android:orientation="vertical"      设置页面垂直布局（ 从上至下的排列）--> 
+  <!--      android:orientation="horizontal"    设置页面水平布局（ 从左至右的排列） --> 
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+<!--总体布局-->
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">      
+
+
+<!--    固定顶部-->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#F1E60909"
+            android:orientation="horizontal"   
+            tools:ignore="MissingConstraints">
+        <Button
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </Button>
+        <Button
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </Button>
+        <Button
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </Button>
+        <Button
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </Button>
+
+    </LinearLayout>
+    <!--    固定顶部-->
+
+<!--中间可滑动布部分-->
+    <ScrollView android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                tools:ignore="MissingConstraints">
+        <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/purple_200">
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/teal_200">
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/teal_700">
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/white">
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/purple_500">
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/purple_200">
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/black">
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/purple_200">
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/white">
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/purple_500">
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/teal_200">
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="100dp"
+                          android:background="@color/purple_200">
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <!--中间可滑动布部分-->
+
+
+<!--    底部固定-->
+    <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#F1E60909"
+            tools:ignore="MissingConstraints">
+        <Button
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </Button>
+        <Button
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </Button>
+        <Button
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </Button>
+        <Button
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </Button>
+    </LinearLayout>
+    <!--    底部固定-->
+    
+</LinearLayout>
+<!--总体布局-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+
+```xml
+    <ScrollView>        </ScrollView>     //  页面滑动标签
+
+用法
+    
+
+    <ScrollView android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                tools:ignore="MissingConstraints">
+        <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
+               
+               可滑动内容    
+
+
+     </LinearLayout>
+
+    </ScrollView>
+    ```
