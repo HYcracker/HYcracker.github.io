@@ -19,6 +19,12 @@ Intellij idea专业版 yyds
 如果你是大佬就单纯想来看看我，那就当我没说，还请大佬来指点指点，必将感激不敬。
 不废话啦， 傻瓜式教程马上开始。小板凳坐好啦，下面才是学习Android 开发正确的打开方式。
 
+
+
+
+
+
+
 SQLite 为Android studio 自带   无需下载
 
 Android studio 接数据库(SQLite)，创建数据库
