@@ -1,3 +1,12 @@
+
+---
+layout: post
+title:  "Linux命令篇 linux命令大全简洁明了 linux学习笔记"
+categories: linux
+tags:  centos7  linux  
+author: HYcracker
+---
+
 <font size=6>Linux命令篇 linux命令大全简洁明了 linux学习笔记</font>
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/424ac383440d4a3586799a0ad4ca349f.png)
