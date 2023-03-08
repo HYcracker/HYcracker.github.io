@@ -1,0 +1,1321 @@
+---
+layout: post
+title:  "Mysql 数据库实战大通关"
+categories: mysql
+tags:  工具软件 mysql navicat  
+author: HYcracker
+---
+
+
+# Mysql 数据库实战大通关
+## 引言
+对于学习技能这件事 无论你看再多遍都是没多大用的 ，效果最佳还得实战。实战效果才是学习的正确打开方式，尤其是对于技能方面的。其实有时看理论感觉都能看懂，但是自己动手的时候才发现啥也不会。
+**自己亲自实战才能学到东西。实战更能体会秒处。所以让我们动起手来吧。
+这是我们的实验报告。实战数据库系统的搭建过程。发出来留存一下。 也方便查看复习。
+也就放了代码，没有放图。想看图直接动手实战看吧。**
+
+
+@[TOC](文章目录)
+
+---
+
+# 实验一：MySQL安装
+（安装过程省略啦，可以去网上学习其他大佬的）
+mysql 服务器及客户端工具SQLyog安装  我这里用的是sqlyog 我感觉是落后啦。建议用其他的数据库管理工具
+
+**Navicat 、DataGrip。** 还有很多比较好的 。
+## 一、实验目的
+1．了解MySQL5.7安装的相关条件；
+2．掌握MySQL5.7安装方法
+3．掌握MySQL服务器启动和停止方法。
+4．掌握MySQL服务器连接和断开方法。
+5.  掌握系统环境变量的设置方法
+6.  掌握安装SQLyog方法
+7. MySQL8.0 安装过程
+## 二、实验内容
+1．学习MySQL5.7安装教程
+2．安装MySQL5.7
+3. 在命令提示符下启动MySQL服务器
+4. 在命令提示符下停止MySQL服务器
+5. 在命令提示符下连接MySQL服务器
+6. 在命令提示符下断开MySQL服务器
+7. 安装并启用SQLyog
+7. MySQL8.0 安装过程
+
+# 实验二、数据库的创建与管理
+## 一、实验目的
+1.掌握设置Mysql数据库存放位置的方法
+2．掌握MySQL数据库创建方法
+3．掌握MySQL数据库修改方法。
+4．掌握MySQL数据库删除方法。
+5. 掌握查看数据库的方法
+6. 掌握选择数据库的方法
+## 二、实验内容 
+说明：1、2两题为说明mysql数据库迁移办法，大家可根据自己需要选做，不用写到报告中。
+1．在D盘建一个文件夹d:\mysql\
+2. 修改MySQL数据库存放位置为d:\mysql\data
+1）在cmd窗口输入net stop mysql56停止mysql服务
+2) 打开C:\ProgramData\MySQL\MySQL Server 5.6目录下my.ini文件（用记事本打开），
+3）找到datadir，在其前面加“#”，然后在下面输入：“datadir=D:/MySQL/Data”
+
+4）关闭my.ini文件。
+5）将C:\ProgramData\MySQL\MySQL Server 5.6目录下data文件夹复制到d:\mysql下
+6）启动mysql服务器。在cmd窗口输入net start mysql57
+## 三、创建数据库与操作数据库
+3.1 、创建数据库teachdb。
+
+```sql
+CREATE DATABASE teachdb
+```
+
+3.2 、创建数据库lx，指定其字符集为GBK。
+
+```sql
+CREATE DATABASE lx CHARACTER SET GBK;
+```
+
+3.3、创建数据库lx，使用if not exists子句，体会if not exists子句的作用。
+
+3.4、查看创建的数据库lx的详细信息
+
+```sql
+SHOW CREATE DATABASE lx
+```
+
+3.5、选择数据库lx
+
+```sql
+USE lx
+```
+3.6、修改数据库lx的字符集为utf8
+
+```sql
+ALTER DATABASE lx CHARACTER SET utf8;
+```
+
+3.7、删除数据库lx
+
+```sql
+DROP DATABASE IF EXISTS lx;
+```
+
+
+# 实验三、数据表的创建与表结构维护
+## 一、实验目的
+1．掌握创建表的方法
+2．掌握修改表的方法
+3．掌握查看数据库中表及表结构的方法
+4．掌握修改表的方法。
+5．掌握表的复制方法
+6．掌握表约束的设置及删除方法
+## 二、实验内容
+### 建表
+**2.1、创建表students**
+
+```sql
+CREATE TABLE students ( 
+xh CHAR(8)NOT NULL,
+xm CHAR(10)NOT NULL,
+xb ENUM('男','女') NOT NULL DEFAULT '男',
+xybh CHAR(2) NOT NULL,
+jtzz VARCHAR(20),
+yxxf DECIMAL(4,1) DEFAULT 0,
+rxsj DATE NOT NULL)
+ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+```
+
+2.2、创建表 teachers
+
+```sql
+CREATE TABLE teachers (
+jgh CHAR(5) NOT NULL COMMENT '教职工',
+xm CHAR(10) NOT NULL COMMENT '姓名',
+xybh CHAR(2) NOT NULL COMMENT '学院编号',
+xb ENUM('男','女') NOT NULL DEFAULT '男' COMMENT '性别',
+zc CHAR(8) COMMENT '职称',
+csrq DATE COMMENT '出生日期');
+```
+
+2.3、创建表 teaching
+
+```sql
+CREATE TABLE teaching
+(jgh CHAR(5) NOT NULL ,
+kch CHAR(4) NOT NULL ,
+bh CHAR(6) NOT NULL ,
+skxn INT NOT NULL ,
+skxq CHAR(2))
+```
+
+2.4、创建表curriculum
+
+```sql
+CREATE TABLE curriclum
+(kch CHAR(8) NOT NULL ,
+kcm VARCHAR(20) NOT NULL ,
+xf DECIMAL(3,1) NOT NULL ,
+xs TINYINT NOT NULL )
+```
+
+2.5、创建grade表
+
+```sql
+CREATE TABLE grade
+(xh CHAR(8) NOT NULL ,
+kch CHAR(4) NOT NULL ,
+pscj DECIMAL(3,1) ,
+qmcj DECIMAL(4,1) ,
+cj DECIMAL(4,1))
+```
+
+2.6、创建department表
+
+```sql
+CREATE TABLE department
+(xybh CHAR(2) NOT NULL ,
+xym VARCHAR(20) NOT NULL ,
+jsrs INT NOT NULL,
+dh CHAR(8))
+```
+
+## 三、操作表
+3.1、用alter table语句为students表中添加主键约束，将xh列设为主键
+
+```sql
+ALTER TABLE students
+ADD CONSTRAINT PRIMARY KEY(xh)
+```
+
+3.2、用alter table语句为curriculum表中添加主键约束，将kch列设为主键
+
+```sql
+ALTER TABLE curriculum
+ADD CONSTRAINT PRIMARY KEY(kch)
+```
+
+3.3创建grade1表（表结构与grade表相同），在建表时将xh和kch设为主键，将表中xh列设置为外键，该字段的值参照students表中xh列的值，并设置删除操作为no action，设置更新操作为cascade。
+建表时要对存储引擎、字符集及检验规则作如下设置（与students表对应设置相同）
+
+```sql
+ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+CREATE TABLE gradel
+(xh CHAR(8) NOT NULL ,
+kch CHAR(4) NOT NULL ,
+pscj DECIMAL(3,1) ,
+qmcj DECIMAL(4,1),
+cj DECIMAL(4,1),
+PRIMARY KEY(xh,kch) ,
+FOREIGN KEY(xh) REFERENCES students(xh)
+ON DELETE NO ACTION ON UPDATE CASCADE)
+ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+```
+
+3.4、修改department表，将表中xybh列设置为主键，xym列设置唯一性约束
+
+```sql
+ALTER TABLE department
+ADD PRIMARY KEY (xybh),
+ADD UNIQUE(xym)
+```
+
+3.5、复制teachers表中职称为教授的教师信息到表teacherjs中
+（注意，本题要求利用已有表建新表同时同步复制符合条件的数据到新表中）。
+
+```sql
+CREATE TABLE teacherjs AS (SELECT * FROM teachers WHERE zc='教授')
+```
+
+3.6、在teacherjs表中添加一列sjh，
+数据类型为char，长度为11，允许为空。
+
+```sql
+ALTER TABLE teacherjs 
+ADD COLUMN sjh CHAR(11) NULL
+```
+
+3.7、将teacheris表中sjh列删除。
+
+```sql
+ALTER TABLE teacherjs
+DROP COLUMN sjh
+```
+
+3.8、复制grade表的表结构到grade2
+
+```sql
+CREATE TABLE grade2 LIKE grade
+```
+
+3.9、查看grade2表的表结构
+
+```sql
+DESC grade2
+```
+
+3.10、删除teachherjs、grade2表
+
+```sql
+DROP TABLE teacherjs,grade2
+```
+
+# 实验四、数据表中数据的管理
+## 一、实验目的
+1．掌握表中数据的插入方法
+2．掌握表中修改数据的方法
+3.掌握删除表中数据的方法
+## 二、实验内容
+2.1.向grade表中用insert语句插入表中所列最后一条记录。
+
+```sql
+INSERT INTO grade(xh,kch,pscj,qmcJ)
+VALUES('20190522',1005,12,48)
+```
+
+2.2.向students表中用insert语句插入表中前5条记录（一条insert语句）
+
+```sql
+INSERT INTO students(xh,xm,xb,xybh,jtzz,yxxf,rxsj)
+VALUES
+('16050522','杨婷','女','05','广州深圳',33,'2016-9-1'),
+('17050516','陈萍','女','05','广州莆田',33,'2017-9-1'),
+('17050533','李东','男','05','上海浦东',33,'2017-9-1'),
+('17061501','叶东云','男','05','北京海定区',33,'2017-9-1'),
+('17063022','谭新','男','08','吉林长春',33,'2017-9-1')
+```
+
+2.3.创建表stu1,包含字段及设置如下：
+
+```sql
+CREATE TABLE stu1(
+xh1 CHAR(8) NOT NULL,
+xm CHAR(10) NOT NULL,
+xybh CHAR(2) NOT NULL,
+yxxf DECIMAL(4,1) DEFAULT 0)
+```
+
+2.4.将students表中与stu表中对应的各字段数据填充到stu1表中
+
+```sql
+INSERT INTO stu1
+SELECT xh,xm,xybh,yxxf FROM students
+```
+
+2.5.向students表中插入一名学生记录，学号为20200511，姓名为刘庆，性别为男，学院编号为05，家庭住址为辽宁大连，入学时间为2020.09.1。
+
+```sql
+INSERT INTO students(xh,xm,xb,xybh,jtzz,rxsj)
+VALUES('20200511','刘庆','男','05','辽宁大连','2020.09.1')
+```
+
+
+
+
+
+
+
+
+2.6.将各表中其余数据输入的相应表中
+2.7.用update语句将大学英语课的学分改为3.5，学时改为56。
+
+```sql
+UPDATE curriclum
+SET xf=3.5,xs=56 WHERE kcm='大学英语'
+```
+
+2.8.用update语句更新grade表中cj列的值（成绩列值用表中给出的计算公式更新）
+
+```sql
+UPDATE grade
+SET cj=pscj=qmcj*0.8
+
+SELECT * FROM grade
+```
+
+2.9.用delete语句删除curriculum表中从未有学生选课记录的课程。
+
+```sql
+DELETE FROM curriclum
+WHERE kch NOT IN(SELECT kch FROM grade)
+SELECT * FROM curriclum
+```
+
+
+2.10.删除teachers表中年龄超过65岁的教师记录
+
+```sql
+DELETE FROM teachers
+WHERE YEAR(CURDATE())-YEAR(csrq)>65
+```
+
+
+# 实验五、表数据的查询
+## 一、实验目的
+1．了解select查询语句中各子句的作用及用法
+2.掌握单表查询、多表查询的方法
+## 二、实验内容
+1. 建立查询，要求统计各学院学生人数,结果按学生人数降序排序，查询结果显示学院编号及人数。
+
+```sql
+SELECT xybh,COUNT(*)
+FROM students
+GROUP BY xybh
+ORDER BY xybh DESC
+```
+
+
+
+
+2.建立查询，查询2018-9-1入学的学生信息。
+
+```sql
+SELECT * FROM students WHERE rxsj='2018-09-01'
+```
+
+
+
+3.建立查询，要求统计各学院各级职称教师人数,结果按学院编号及职称排序，查询结果显示学院编号、职称及人数（要求查询结果显示时定义汉字显示标题）。
+
+```sql
+SELECT xybh 学院编号,zc 职称,COUNT(*) 人数
+FROM teachers
+GROUP BY xybh,zc
+ORDER BY xybh,zc DESC;
+```
+
+
+
+4.统计各学院男、女学生数，结果显示学院编号、性别、人数，结果按学院编号排序（要求查询结果显示时定义汉字显示标题）。
+
+```sql
+SELECT xybh 学院编号,xb 性别,COUNT(*) 人数
+FROM students,
+GROUP BY xybh,xb,
+ORDER BY xybh,DESC;
+```
+
+
+5.先将students表中最后一条记录：19050722 孙兰 女 05 ...中学号改为19050723，再执行下面命令
+
+```sql
+UPDATE students
+SET xh=CONCAT('20',INSERT(xh,5,2,''))
+```
+
+注意：两个''中间无空格。此命令作用在于将学号列前面加上20，中间从第5字符位置去掉两位。
+
+```sql
+UPDATE students
+SET xh='19050723'
+WHERE xm= '孙兰'
+```
+
+
+
+6.建立查询，按学院统计汇总各学院各年级人数，结果显示学院编号、年级、人数，结果按学院编号排序（要求查询结果显示时定义汉字显示标题）。
+注意：年级可用 left函数取得，形式  left（学号，4） as 年级
+
+```sql
+SELECT xybh 学院编号, LEFT(xh,4) AS 年级, COUNT(*) 人数
+FROM students
+GROUP BY xybh,xh
+ORDER BY xybh DESC;
+```
+
+7.统计每名同学的平均成绩，要求显示学院名、学号、姓名、已修学分、平均成绩，结果按学院名及学号排序。
+
+```sql
+SELECT xym 学院名, s.xh 学号, xm 姓名, AVG(cj) 平均分
+FROM department d INNER JOIN students s ON d.`xybh`=s.`xybh` INNER JOIN 
+grade g ON s.xh=g.xh 
+GROUP BY s.xh 
+ORDER BY xym, s.xh 
+```
+
+
+8.查询各学院教师授课情况，要求显示学院名，教工号，姓名，职称，课程号，班号，授课学年,结果按学院名、授课学年排序。
+
+```sql
+SELECT dep.xym 学院名,te.jgh 教工号,te.xm 姓名,te.zc 职称,tea.kch 课程号,tea.bh 班号,tea.skxn 授课学年
+FROM teaching tea LEFT JOIN  teachers te ON tea.jgh=te.jgh 
+LEFT JOIN department dep ON  te.xybh=dep.xybh
+ORDER BY xym,skxn DESC; 
+```
+
+
+9.建立查询，要求显示2017年入学且已修学分不足33分的学生信息，查询结果显示学院名、学号、姓名、性别、已修学分。（入学年份可用year（rxrq）取得）
+
+```sql
+SELECT dep.xym 学院名,stu.xh 学号,stu.xb 性别,yxxf 已修学分
+FROM students stu LEFT JOIN department dep ON stu.xybh=dep.xybh WHERE yxxf<33
+```
+
+10.建立查询，要求统计各学院学生计算机基础课的平均成绩、最高分及最低分。要求显示学院名、课程名、平均成绩、最高分及最低分。显示结果按学院名排序。
+
+```sql
+SELECT xym 学院名, kcm 课程名, AVG(cj) 平均成绩, MAX(cj) 最高分,MIN(cj) 最低分
+FROM department d INNER JOIN students S ON d.`xybh`=s.`xybh` INNER JOIN grade g ON s.`xh`=g.`xh`
+INNER JOIN curriculum c ON g.`kch`=c.`kch`
+WHERE kcm='计算机基础' GROUP BY d.`xybh` ORDER BY xym 
+```
+
+
+
+11.建立查询，要求显示各学院学生计算机基础课的成绩。要求显示学院名、课程名、成绩。显示结果按学院名排序。（通过此题执行结果回顾上一题执行结果是否正确
+
+```sql
+SELECT xym 学院名, kcm 课程名, cj 成绩 
+FROM department d INNER JOIN students s ON d.`xybh`=s.xybh INNER JOIN grade g ON s.xh=g.xh 
+INNER JOIN curriculum c ON g.`kch`=c.`kch`
+WHERE kcm='计算估计基础'
+ORDER BY xym
+```
+
+
+
+
+
+
+
+12.建立查询，显示教师授课情况，要求未有授课记录的教师也显示出来。
+
+```sql
+SELECT t.jgh,xm,xybh,kch,bh,skxn FROM teachers t LEFT JOIN 
+teaching c ON t.jgh=c.jgh
+```
+
+
+13.建立查询，显示从没有授课的教师情况，结果显示jgh、xybh、xm、xb、zc、csrq
+
+```sql
+SELECT jgh, xm, xybh, xb, zc, csrq FROM teachers
+WHERE jgh NOT IN(SELECT DISTINCT jgh FROM teaching)
+```
+
+
+14.建立查询，查询学号为20191511的学生已修各门课程的课程名、成绩，查询结果显示学号、姓名、课程名、成绩。
+
+```sql
+SELECT s.xh, xm, kcm, cj
+FROM students s INNER JOIN grade g ON s.xh=g.xh INNER JOIN curriculum c ON g.kch=c.`kch`
+WHERE s.xh='20191511'
+```
+
+15.建立查询，要求查询比学号为20170516的学生计算机基础这门课的成绩高的同班的其他同学这门课的成绩。（班号为学号中第3-6位），要求显示学号、班号、成绩。
+
+```sql
+SELECT g.xh, SUBSTRING(g.xh,3,4) AS 班号, g.`cj`
+FROM grade g INNER JOIN grade e ON g.kch=e.kch
+AND SUBSTRING(g.xh,3,4)=SUBSTRING(e.xh,3,4)
+AND g.cj>e.cj WHERE e.xh='20170516' AND e.kch=
+(SELECT kch FROM curriculum WHERE kcm='计算机基础')
+```
+
+
+
+16.查询为1705班上计算机基础课的老师的信息及教授课程情况，查询结果显示姓名、所属学院名称、职称、所教课程的课程名、学时，要求去掉重复记录。
+
+```sql
+SELECT DISTINCT xm, xym, zc, kcm, xs
+FROM department d INNER JOIN teachers t ON d.`xybh`=t.`xybh`INNER JOIN teaching e 
+ON t.jgh=e.`jgh`
+INNER JOIN curriculum c ON e.`kch`=c.`kch`
+WHERE t.jgh IN(SELECT jgh FROM teaching t INNER JOIN curriculum c 
+ON t.kch=c.kch WHERE kcm='计算机基础' AND bh='1705')
+```
+
+
+17.显示1705班学生所学各门课程的最高、最低及平均分情况，结果显示班号、课程号、课程名、最高分、最低分、平均分（要求定义显示标题）
+
+```sql
+SELECT '1705 班级', g.kch 课程号, kcm 课程名, 
+MAX(cj) 最高分, MIN(cj) 最低分, AVG(cj) 平均分
+FROM curriculum c INNER JOIN grade g ON c.kch=g.kch
+WHERE SUBSTRING(xh,3,4)='1705' 
+GROUP BY g.kch
+```
+
+
+
+
+
+
+
+
+18.显示各班学生所学各门课程的最高、最低及平均分情况，结果显示班号、课程号、课程名、最高分、最低分、平均分
+
+```sql
+SELECT SUBSTRING(xh,3,4) 班号, g.kch 课程号, kcm 课程名, 
+MAX(cj) 最高分, MIN(cj) 最低分, AVG(cj) 平均分
+FROM curriculum c INNER JOIN grade g ON c.kch=g.kch
+GROUP BY SUBSTRING(xh,3,4), g.kch
+```
+
+
+
+19.查询各门课程成绩前三的课程名、课程号、学号、成绩（成绩相同排名相同）
+
+
+```sql
+SELECT kcm 课程名, g.kch 课程号, g.xh 学号, g.cj 成绩
+FROM curriculum c INNER JOIN grade g ON c.`kch`=g.`kch`
+WHERE (SELECT COUNT(DISTINCT cj) FROM grade WHERE g.`kch`=kch AND g.`cj`<cj)<3
+ORDER BY g.`kch`, g.cj DESC
+```
+
+
+
+
+
+
+
+
+
+20.查询各门课程的最高分，结果显示课程号、学号、成绩
+
+```sql
+SELECT xh 学号, xm 姓名, xb 性别
+FROM students WHERE xb='女' 
+UNION 
+SELECT jgh, xm, xb FROM teachers WHERE jgh='女'
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+21.查询女教师和女学生的信息，结果显示编号（即对应jgh或xh列的内容），姓名，性别（定义显示标题）。
+提示：用合并查询结果的方法（union）
+
+```sql
+SELECT xh 编号,xm 姓名,xb 性别 FROM students WHERE xb='女'
+UNION
+SELECT jgh,xm,xb FROM teachers WHERE jgh='女'
+```
+
+22.查询2017年入学的学院编号是05的专业的学生的已修学分比学院编号是08的任一学生的已修学分高的学生的xh,xm,xybh,yxxf （先在student表中插入一条记录，xh：20170806，xm：宋清，xb：男，xybh：08，
+jtzz：辽宁沈阳，yxxf：30，rxsj：2017-9-1，再做查询命令，插入记录操作不用截图）
+
+```sql
+SELECT xh, xm, xybh, yxxf
+FROM students WHERE xybh='05' AND YEAR(rxsj)=2017 AND
+yxxf>ANY(SELECT yxxf FROM students WHERE xybh='08' AND YEAR(rxsj)=2017)
+```
+
+23.查询2017年入学的学院编号是05的专业的学生的已修学分比学院编号是08的所有学生的已修学分高的学生的xh,xm,xybh,yxxf
+```sql
+SELECT xh, xm, xybh, yxxf
+FROM students WHERE xybh='05' AND YEAR(rxsj)=2017 AND
+yxxf>ANY(SELECT yxxf FROM students WHERE xybh='08' AND YEAR(rxsj)=2017)
+```
+
+24.查询年龄最大的教师信息
+
+```sql
+SELECT * FROM teachers ORDER BY csrq LIMIT 1
+```
+
+
+25.如果有2017年入学的学生的yxxf高于30，则显示这些学生的学号、姓名、学院名、课程名，成绩（要求用子查询及exists）
+
+```sql
+SELECT s.xh, xm, xym, kcm, cj 
+FROM department d INNER JOIN students s ON d.`xybh`=s.`xybh`
+INNER JOIN grade g ON s.`xh`=g.`xh` INNER JOIN curriculum c ON g.`kch`=c.`kch`
+WHERE yxxf>=30 AND LEFT(s.xh,4)=2017 
+AND EXISTS(SELECT * FROM students WHERE yxxf>=30 AND LEFT(xh,4)=2017)
+```
+
+
+
+
+
+
+
+26.查询家庭住址是北京地区的学生情况，结果显示students表中全部字段的值。
+
+```sql
+SELECT * FROM students WHERE jtzz LIKE
+```
+
+# 实验六   索引的建立与管理（2学时）
+## 一、实验目的
+1．掌握各种索引的创建方法
+2．掌握查看索引的方法
+3．掌握删除索引的方法
+## 二、实验内容
+1.用create index命令在teachers表中按xybh建索引xybh_index。
+
+```sql
+CREATE INDEX xybh_index ON teachers(xybh)
+```
+
+
+
+2.用show create table命令查看teachers表结构，查看新建的索引。
+
+```sql
+SHOW CREATE TABLE teachers
+```
+
+
+
+
+
+3.用alter table命令在students表的jtzz列的前4个字节上创建索引jtzz_stu，升序排序。
+
+```sql
+ALTER TABLE students ADD INDEX jtzz_stu (jtzz(4))
+```
+
+
+
+
+4.在students表的jtzz列上创建普通索引jtzz_stu1，降序排列。
+
+```sql
+ALTER TABLE students ADD INDEX jtzz_stu1 (jtzz DESC) 
+```
+
+
+
+
+5.用explain语句查看“查询家住北京市的学生的信息”语句的执行计划
+
+
+
+```sql
+EXPLAIN SELECT * FROM students WHERE jtzz LIKE '北京%'
+```
+
+
+
+6.用explain语句查看“指定使用jtzz_stu1索引用于查询家庭住址在北京地区的学生信息”的语句的执行计划。
+
+```sql
+EXPLAIN SELECT * FROM students USE INDEX FOR JOIN(jtzz_stu1) 
+WHERE jtzz LIKE '北京%'
+```
+
+7.使用create index命令在curriculum表的kcm上创建唯一索引kcm_idx。
+
+```sql
+CREATE UNIQUE INDEX kcm_idx ON curriculum(kcm)
+```
+
+
+
+
+8.使用alter table命令在departmeng表的dh列上创建唯一性索引dh_idx。
+
+```sql
+ALTER TABLE department ADD UNIQUE INDEX dh_idx (dh)
+```
+
+
+
+
+9.在teachers表上按zc和csrq建立多列索引zccsrq_idx。
+
+```sql
+CREATE INDEX zccsrq_idx ON teachers(zc,csrq)
+```
+
+
+10.查看teachers表中索引的详细信息（用show index命令）
+
+```sql
+SHOW INDEX FROM teachers
+```
+
+
+
+
+11.用drop index命令删除索引zccsrq_idx
+
+```sql
+DROP INDEX zccsrq_idx ON teachers
+```
+
+
+
+12.用alter table命令删除department表的索引dh_idx
+
+```sql
+ALTER TABLE department DROP INDEX dh_idx
+```
+
+
+
+
+
+
+# 实验七   视图的创建与管理（2学时）
+## 一、实验目的
+1．掌握创建视图的方法
+2．掌握查看视图的方法
+3．掌握修改视图的方法
+4．掌握删除视图的方法
+5. 掌握视图的使用方法
+## 二、实验内容
+1.在students表上创建视图stuview1，包含xh、xm、xb、xybh、yxxf、rxsj。
+
+```sql
+CREATE VIEW stuview1
+AS SELECT xh, xm, xb, xybh, yxxf, rxsj FROM students
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+2.利用stuview1查询2019年入学的学生的学号、姓名、性别、学院编号、已修学分信息，查询结果按学号排序。
+
+```sql
+SELECT xh, xm, xb, xybh, yxxf FROM stuview1
+WHERE YEAR(rxsj)=2019 ORDER BY xh
+```
+
+
+
+
+
+3.修改视图stuview1，使视图中包含各列的列名（显示标题）为汉字学号、姓名、性别、学院编号、已修学分、入学时间。
+
+```sql
+CREATE OR REPLACE VIEW stuview1(学号, 姓名, 性别, 学院编号, 已修学分, 入学时间)
+AS SELECT xh, xm, xb, xybh, yxxf, rxsj
+FROM students
+```
+
+
+
+
+4.利用stuview1查询学院编号是05的2019年入学的学生的学号、姓名、性别、学院编号、已修学分
+
+```sql
+SELECT 学号, 姓名, 学院编号, 已修学分
+FROM stuview1 WHERE YEAR(入学时间)=2019
+```
+
+
+
+5.利用stuview1向students表中插入一条学生信息：（学号：20200112，姓名：刘岩，性别：男，学院编号：01，入学时间：2020-9-1）
+
+```sql
+INSERT INTO stuview1(学号, 姓名, 性别, 学院编号, 入学时间)
+VALUES('20200112', '刘岩', '男', '01', '2020-9-1')
+```
+
+
+
+
+
+
+
+6.在students表上创建视图stuview2，包含xh、xm、xb、xybh列，且xybh是05。
+
+```sql
+CREATE VIEW stuview2
+AS SELECT xh,xm,xb,xybh FROM students WHERE xybh='05'
+```
+
+
+7.用stuview2向students表中插入一条学生信息：（学号：20200111，姓名：张琪，性别：男，学院编号：05），观察执行结果，分析原因
+
+```sql
+NSERT INTO stuview2(xh, xm, xb, xybh)
+VALUES('20200111', '张琪', '男', '05')
+```
+
+8.利用视图stuview2更新学生记录，将学号为20200112的学生的学院编号改为05
+
+```sql
+UPDATE stuview2 SET xybh='05' WHERE xh='20200112'
+```
+
+9.利用stuview2，更新students表中学号为20190522的学生的学院编号为01。
+（对比8，9两题的执行结果，思考利用视图更新数据的限制）
+
+```sql
+SELECT * FROM students WHERE xh='20190522'
+```
+
+```sql
+UPDATE stuview2
+SET xybh='01' WHERE xh='20190522'
+```
+```sql
+SELECT * FROM students WHERE xh='20190522'
+```
+
+10.利用stuview2删除xybh为01的学生信息。（观察执行结果，思考原因）
+```sql
+DELETE FROM stuview2 WHERE xybh='01'
+```
+11.创建带with local check option的视图stuview3，视图包括学院编号是05的students表的所有字段。
+```sql
+CREATE VIEW stuview3
+AS SELECT * FROM students WHERE xybh='05' WITH LOCAL CHECK OPTION
+```
+12.通过视图stuview3插入一条记录，（xh：20200113，xm：邓婕，xb：女，xybh：05，yxxf：10，rxsj：2020-9-1）
+
+```sql
+INSERT INTO stuview3(xh, xm, xb, xybh, yxxf, rxsj)
+VALUES('20200113', '邓婕', '女', '05', 10, '2019-9-1')
+```
+13.通过视图stuview3插入一条记录，（xh：20200114，xm：李丹，xb：女，xybh：01，yxxf：10，rxsj：2020-9-1）
+
+```sql
+INSERT INTO stuview3(xh, xm, xb, xybh, yxxf, rxsj)
+VALUES('20200114', '李丹', '女', '05', 10, '2019-9-1')
+```
+14.通过视图stuview3删除xh为20200113的学生信息
+```sql
+DELETE FROM stuview3 WHERE xh='20200113'
+```
+15.通过视图stuview3删除xh为20202001的学生信息（此学生信息在students表中有对应记录，其学院编号为08）
+
+```sql
+DELETE FROM stuview3 WHERE xh='20202001'
+```
+16.建立视图scgview，包含xh、xm、xybh、kch、kcm、pscj、qmcj、cj字段。
+
+```sql
+CREATE VIEW scgview
+AS SELECT s.xh, xm, xybh, g.kch, kcm, pscj, qmcj, cj 
+FROM students s INNER JOIN grade g ON s.xh=g.xh INNER JOIN curriculum c ON g.kch=c.kch
+```
+
+17.利用视图scgview查询学生所学各门课程及成绩情况，结果包含xh、xm、xybh、kch、kcm、pscj、qmcj、cj列信息。
+
+```sql
+SELECT * FROM scgview
+```
+18.利用视图scgview查询201705班学生所学各门课程及成绩情况，结果按课程号及学号排序。
+
+```sql
+SELECT * FROM scgview WHERE xh LIKE '201705%'
+ORDER BY kch, xh DESC
+```
+19.利用视图scgview更新学号为20190522、课程号为1005的学生的qmcj为60，cj为60
+
+```sql
+UPDATE scgview SET qmcj=60, cj=60 WHERE xh='20190522' AND kch='1005'
+```
+
+
+
+20.利用视图scgview更新课程名为运筹学的课程的课程号为0022（思考，如果在建scgview时用的是c.kch而不上g.kch，那么这个更新能否执行成功）
+
+```sql
+UPDATE scgview SET kch='0022' WHERE kcm='运筹学'
+```
+
+21.利用视图scgview删除学号为20160522、课程号为0001的相关信息（观察结果，分析原因）
+
+```sql
+DELETE FROM scgview WHERE xh='20160522' AND kch='0001'
+```
+
+
+22.利用视图scgview插入数据（学号：20190505，郭佳，学院编号：05，课程号：0501，课程名：经济学，平时成绩：20，期末成绩80，成绩：84），观察结果，分析原因。
+
+```sql
+INSERT INTO scgview (xh, xm, xybh, kch, kcm, pscj, qmcj, cj)
+VALUES('20190505', '郭佳', '05', '0501', '经济学', 20, 80, 84)
+```
+
+
+# 实验八、存储过程与函数的创建与管理
+1.建立存储过程gr_ins，用于向学生成绩表（grade）插入数据。
+
+```sql
+DELIMITER $$
+CREATE PROCEDURE gr_ins(IN xh CHAR(8),IN kh CHAR(8),
+IN ps DECIMAL(4,1),IN qm DECIMAL(4,1))
+BEGIN
+SET @zcj=ps+qm*0.8;
+INSERT INTO grade VALUES(xh,kh,ps,qm,@zcj);
+END$$
+DELIMITER ;
+```
+
+2.执行gr_ins插入学号为‘20190522’，课程号为‘0012’，平时成绩19.5，期末成绩82的学生成绩信息。
+
+```sql
+CALL gr_ins('20190522','0012',19.5,82)
+```
+
+3.建立存储过程，按给定的xh、kch查询学生的成绩信息。
+
+```sql
+DELIMITER $$
+CREATE PROCEDURE gr_sel(IN xh CHAR(8),IN kh CHAR(8))
+BEGIN
+SELECT * FROM grade WHERE xh=xh AND kch=kh;
+END$$
+DELIMITER ;
+```
+
+4.利用存储过程gr_sel查询学号为‘20190522’，课程号为‘0012’的学生成绩记录。
+
+```sql
+CALL gr_sel('20190522','0012')
+```
+
+5.建立存储过程cur_upd，用于更新课程信息（curriculum）中数据，更新指定课程号的课程的学时和学分，并将更新的课程信息以“本次修改了课程号为1222的课程的学分为：4，学时为：64”形式赋给输出参数ts（红字部分为可变的，与执行时具体参数值相关）
+
+```sql
+DELIMITER $$
+CREATE PROCEDURE cur_upd(IN kh CHAR(4),
+IN xf1 DECIMAL(2,1),IN xs1 TINYINT,OUT ts VARCHAR(50)) 
+BEGIN
+UPDATE curriculum SET xf=xf1,xs=xs1 WHERE kch=kh;
+SET ts=CONCAT('本次修改了课程号为',kh,'课程的学分为：',xf1,'，学时为：',xs1);
+END$$
+DELIMITER ;
+```
+
+6.执行cur_upd，将课程号为1222的课程的学分改为4，学时改为64，并接受cur_upd的输出参数，显示输出参数的结果
+
+```sql
+SET @ts=NULL;
+CALL cur_upd('1222',4,64,@ts);
+SELECT @ts;
+```
+
+7.建立存储过程tea_del，用于从教师信息（teacherts）表中删除给定教工号的教师信息。
+要求在存储过程中判断是否存在给定教工号的教师信息，如果存在，则删除给定教工号的教师记录，并以下图形式显示提示信息；如果不存在给定教工号的教师信息，则以提示形式显示‘无此教工’。
+
+```sql
+DELIMITER $$
+CREATE PROCEDURE `teachdb`.`tea_del`(IN gh CHAR(5))
+  BEGIN
+  IF EXISTS(SELECT * FROM teachers WHERE jgh=gh)
+  THEN SELECT xm INTO@xm FROM teachers WHERE jgh=gh;
+  DELETE FROM teachers WHERE jgh=gh;
+  SELECT CONCAT(gh,@xm,'的教工记录已删除') AS 提示;
+  ELSE SELECT '无此教工' AS 提示;
+  END IF;
+  END$$
+DELIMITER ;
+```
+
+8.1）执行tea_del，删除教工号为16003的教工信息。
+
+```sql
+CALL tea_del('16003')
+```
+
+2）再次执行tea_del，删除教工号为16003的教工信息。
+
+```sql
+CALL tea_del('16003')
+```
+
+9.建立存储过程tea_sel，查询指定学院名的学院具有各类职称教师的人数。结果以下图形式显示。
+
+```sql
+DELIMITER $$
+CREATE PROCEDURE `teachdb`.`tea_sel`(IN ym CHAR(20))
+  BEGIN
+  SELECT xym 学院名,zc 职称,COUNT(*) 人数 FROM department d INNER  JOIN teachers t ON d.xybh=t.xybh WHERE xym=ym  GROUP BY zc; 
+  END$$
+DELIMITER ;
+```
+
+10.行tea_sel，查询经济管理学院具有各类职称教师的人数。
+
+```sql
+CALL tea_sel('经济管理学院')
+```
+
+12.建立函数zsh，使其能计算形如1+2+3+……+n的和，n为任意给定的正整数。
+
+```sql
+DELIMITER $$
+CREATE FUNCTION `teachdb`.`zsh`(m INT)
+RETURNS INT DETERMINISTIC
+  BEGIN
+  DECLARE r,s INT DEFAULT 0;
+  WHILE r<=m DO
+   SET s=s+r,r=r+1;
+  END WHILE;
+  RETURN s;
+  END$$
+DELIMITER ;
+```
+
+13.调用zsh，求n为100时的1+2+3+……+100和值，以下面的形式显示结果。
+
+```sql
+SELECT zsh(100) AS '1-100的和'
+```
+
+14.建立函数jch，使其能计算形如1！+2！+3！+……+n!的和，n为任意给定的正整数。
+方法1：
+
+```sql
+DELIMITER $$
+CREATE FUNCTION `teachdb`.`jch`(m INT)
+RETURNS INT DETERMINISTIC
+ BEGIN
+ DECLARE k,u INT DEFAULT 1;
+ DECLARE s INT DEFAULT 0;
+ WHILE k<=m DO
+ SET u=u*k;
+ SET s=s+u;
+ SET k=k+1;
+ END WHILE;
+ RETURN s;
+ END$$
+DELIMITER ;
+```
+
+方法2：
+
+```sql
+DELIMITER $$
+CREATE FUNCTION `teachdb`.`jch1`(m INT)
+RETURNS INT DETERMINISTIC
+ BEGIN
+ DECLARE s INT DEFAULT 0;
+ DECLARE r INT DEFAULT 1;
+ WHILE r<=m DO
+  SET @k=1,@c=1 ;
+  WHILE @c<=r DO
+   SET @k=@k*@c,@c=@c+1;
+  END WHILE;
+   SET s=s+@k,r=r+1;
+  END WHILE;
+ RETURN s;
+ END$$
+DELIMITER ;
+```
+
+15.调用jch，计算n为10时的阶乘和
+
+```sql
+SELECT jch(10) AS '1-10的阶乘和'
+```
+
+16.建立存储过程ccj，使其能显示任意给定学号和课程号的学生对应成绩（包括学号、姓名、课程号、课程名、成绩）（结果显示格式如下）
+
+```sql
+DELIMITER $$
+CREATE PROCEDURE `teachdb`.`ccj`(IN sno CHAR(8),IN cno CHAR(4))
+  BEGIN
+  SELECT s.xh 学号,xm 姓名,g.kch 课程号,kcm 课程名 ,cj 成绩 
+  FROM students s INNER JOIN grade g
+  ON s.xh=g.xh INNER JOIN curriculum c ON g.kch=c.kch
+  WHERE s.xh=sno AND g.kch=cno;
+  END$$
+DELIMITER ;
+```
+
+17.调用ccj，查询学号为20170601，课程号为0002的学生成绩情况
+
+```sql
+CALL ccj('20170601','0002')
+```
+
+18. 建立存储过程bjcj,用于查询给定班号及课程号的该班同学的该课程成绩情况，查询结果显示学号、姓名、课程号、课程名、成绩信息。
+
+```sql
+DELIMITER $$
+CREATE PROCEDURE `teachdb`.`bjcj`(IN bh CHAR(6),IN cno CHAR(4))
+  BEGIN
+  SELECT s.xh 学号,xm 姓名,g.kch 课程号,kcm 课程名 ,cj 成绩 
+  FROM students s INNER JOIN grade g
+  ON s.xh=g.xh INNER JOIN curriculum c ON g.kch=c.kch
+  WHERE LEFT(s.xh,6)=bh AND g.kch=cno;
+  END$$
+DELIMITER ;
+```
+
+19.调用bjcj，查询170505班学生学习课程号为0001的相关信息
+
+```sql
+CALL bjcj('201805','0001')
+```
+
+20.删除存储函数zsh
+
+```sql
+DROP FUNCTION zsh
+```
+
+实验九   触发器创建与管理
+1.为学生成绩表（grade）建立删除触发器del_grade，使在删除学生成绩记录时，若删除记录的成绩>=60,能自动更新学生信息（students）表中该学生的已修学分值，使已修学分=已修学分-该课程的学分。
+
+```sql
+DELIMITER $$
+CREATE TRIGGER `del_grade` AFTER DELETE ON `grade` 
+    FOR EACH ROW 
+    BEGIN
+    IF old.cj>=60 THEN
+    SELECT xf INTO @xf1 FROM curriculum WHERE kch=old.kch;
+    UPDATE students SET yxxf=yxxf-@xf1 WHERE xh=old.xh;
+    END IF;
+    END$$
+DELIMITER ;
+```
+
+2.删除学号为20160522，课程号为0001的学生成绩记录，观察学生信息表中该生已修学分和成绩表的数据变化，验证触发器的作用。
+
+```sql
+DELETE FROM grade1 WHERE xh='20160522' AND kch='0001'
+SELECT * FROM stu1 WHERE xh1='20160522'
+```
+
+3.为teachers表建立insert触发器ins_tri，使在每次输入新教师信息时，能自动更新department表中新职工所在学院的教师人数，使jsrs=jsrs+1
+
+```sql
+DELIMITER $$
+CREATE TRIGGER inaf_tea AFTER INSERT ON teachers 
+    FOR EACH ROW 
+    BEGIN
+    UPDATE department SET jsrs=jsrs+1 WHERE xybh=new.xybh;
+    END$$
+DELIMITER ;
+```
+
+4.在teachers表中插入一条记录：（教工号=02089，姓名=汤静，学院编号=02，性别=女，出生日期=1992.6.21）
+
+```sql
+INSERT INTO teachers (jgh,xm,xybh,xb,csrq)
+VALUES('02089','汤静','02','女','1992.6.21')
+```
+
+5.为grade表建立触发器upbe_grade，当对grade表中pscj和qmcj进行修改时，能自动修改成绩列的值，（cj=pscj+qmcj*0.8）
+
+```sql
+DELIMITER $$
+CREATE TRIGGER `upbe_grade` BEFORE UPDATE ON `grade` 
+    FOR EACH ROW 
+BEGIN
+SET new.cj=new.pscj+new.qmcj*0.8;
+END;
+$$
+DELIMITER ;
+```
+
+6.先向grade表中插入一条记录，学号是‘20200507’，课程号是‘0002’，并查询显示这条记录。然后更新这条记录，使pscj=20，期末成绩=85，再次查询这条记录，观察cj列的值，体会upbe_grade的作用
+
+
+```sql
+INSERT INTO grade (xh,kch) VALUES('20200507','0001')
+SELECT * FROM grade WHERE xh='20200507' AND kch='0001'
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/6f63944c8b19485090d0bf52c01e2cf0.png)
+```sql
+UPDATE grade SET pscj=20,qmcj=85
+WHERE xh='20200507' AND kch='0001'
+SELECT * FROM grade WHERE xh='20200507' AND kch='0001'
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c5688dc07f4f473b83270833dacd395e.png)
+
+
+7.为grade表建立触发器upaf_grade，当对grade表中数据进行修改时，如果原cj>=60而修改后cj<60，则修改students表中该生的已修学分，从已修学分中减去该生所修这门课程的学分；如果原cj<60或原成绩为null，并且修改后cj>=60，则修改students表中该生的已修学分，使已修学分加上这门课的学分。
+
+```sql
+DELIMITER $$
+CREATE TRIGGER `upaf_grade` AFTER UPDATE ON `grade` 
+    FOR EACH ROW 
+BEGIN
+    SELECT xf INTO @xf1 FROM curriculum WHERE kch=old.kch;
+    IF old.cj>=60 AND new.cj<60 THEN
+    UPDATE students SET yxxf=yxxf-@xf1 WHERE xh=old.xh;
+    ELSEIF (old.cj<60 OR old.cj IS NULL) AND new.cj>=60 THEN
+    UPDATE students SET yxxf=yxxf+@xf1 WHERE xh=old.xh;
+    END IF;
+END$$
+DELIMITER ;
+```
+
+8.先查询students表中xh为‘20170516’的学生的已修学分，结果显示xh，yxxf，再查询grade表中xh为‘20170516’，kch为‘0001’的记录，然后更新这条记录，令qmcj为82。再次查询students表中xh为‘20170516’的学生的已修学分，结果显示xh，yxxf，再查询grade表中xh为‘20170516’，kch为‘0001’的记录，对比前后的结果，思考触发器设置是否正确。
+
+
+SELECT xh,yxxf FROM students WHERE xh='20170516'
+![在这里插入图片描述](https://img-blog.csdnimg.cn/fba84ded97534acd8c58be8aa530bcf4.png)
+
+SELECT * FROM grade WHERE xh='20170516' AND kch='0001'
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/b4111dd57c4e4893829b2ef2dea5e6f6.png)
+
+UPDATE grade SET qmcj=82 WHERE xh='20170516' AND kch='0001'
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a7d6680586534bd0829e2f8715bd0565.png)
+
+9.先在grade表中插入一条记录xh为‘20180502’，kch为‘0002’，查询students表中xh为‘20180502’的学生的已修学分，结果显示xh，yxxf，再查询grade表中xh为‘20180502’，kch为‘0002’的记录，然后更新这条记录，令平时成绩为10，qmcj为58。再次查询students表中xh为‘20180502’的学生的已修学分，结果显示xh，yxxf，再查询grade表中xh为‘20180502’，kch为‘0002’的记录，对比前后的结果，思考触发器设置是否正确。
+
+
+```sql
+INSERT INTO grade (xh,kch) VALUES('20180502','0002')
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3f1b3400fa0c4195a1fc75ce3b5d6ee9.png)
+
+SELECT * FROM grade WHERE xh='20180502' AND kch='0002'
+![在这里插入图片描述](https://img-blog.csdnimg.cn/43f312c6ac114a26b2c52ae06d51de51.png)
+
+SELECT xh,yxxf FROM students WHERE xh='20180502'
+![在这里插入图片描述](https://img-blog.csdnimg.cn/85b05b679b4549f09b0d5620b64aef7c.png)
+
+UPDATE grade SET pscj=10,qmcj=58 
+WHERE xh='20180502' AND kch='0002'
+![在这里插入图片描述](https://img-blog.csdnimg.cn/4588527fa1614b3997924fe0291c6981.png)
+
+10.再次更新grade表中xh为‘20180502’，kch为‘0002’的记录，使qmcj=78，查询grade表中xh为‘20180502’，kch为‘0002’的记录，查询students表中xh为‘20180502’的记录，观察结果。
+
+```sql
+UPDATE grade SET qmcj=78 WHERE xh='20180502' AND kch='0002'
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/db37a24549a24736b7ed6cf8a6d07816.png)
+
+11.创建一个1分钟后启动事件 oneminutes，在事件启动后执行语句
+
+INSERT INTO grade (xh,kch,pscj,qmcj) VALUES('20200508','0005','15','60')
+```sql
+CREATE EVENT oneminutes
+ON SCHEDULE AT CURRENT_TIMESTAMP+INTERVAL 1 MINUTE
+DO INSERT INTO grade (xh,kch,pscj,qmcj) VALUES('20200508','0005','15','60');
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a5f1ed8d777646ac84998948f0abb60d.png)
+
+
+12.验证10题的执行结果
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/22560174905945f3928cb94e6a73ca23.png)
+
+
+13.删除10中创建的事件（不带if exists选项）分析产生结果的原因。
+
+```sql
+DROP EVENT oneminutes
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f787f64f0e454fceb629cba02e2a9773.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASFlKb25lcw==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+
+
+
+
+
