@@ -12,8 +12,15 @@ author: HYcracker
 先在布局里面定义几个按钮 分别为 
 打电话 发短信 浏览网页  三个按钮  ，当我们点击相应的按钮 就能执相应的工作  
 先看一下效果图
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/6cec6895cac64df1b4f4b12e8aa17c77.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASFlKb25lcw==,size_20,color_FFFFFF,t_70,g_se,x_16)
 打电话
+
+
+
+
+
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/cbfa8c46d35e4ffbbccbca57cb95b977.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASFlKb25lcw==,size_20,color_FFFFFF,t_70,g_se,x_16)
 **发短信**
 
