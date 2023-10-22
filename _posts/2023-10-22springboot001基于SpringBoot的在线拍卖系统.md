@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "springboot001基于SpringBoot的在线拍卖系统"
-categories: javaweb项目
-tags:  java springboot 毕设项目
+categories: java
+tags:  java
 author: HYcracker
 ---
 
